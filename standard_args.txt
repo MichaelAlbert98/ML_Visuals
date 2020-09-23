@@ -1,0 +1,10 @@
+L.1 Michael Albert and Archan Rupela
+L.2 Archan was not here when answering questions 4 and 5.
+L.3 4 hr 30 min
+L.4 The performances ranged from 10% accuracy (model learned nothing) to 98.5% accuracy (very good performance).
+    A learning rate of 0.001 seemed to be the best, giving us an accuracy of 98.5% in only a few iterations.
+L.5 Testing various modifications, I found that a using a kernal of size 5 to split the data into 32 layers,
+    a maxpool using a 2x2 filter with stride 2, a kernal of size 5 to split the data into 64 layers, the same
+    maxpool, followed by a fully connected layer that constricts the data into 128 outputs, followed by a 
+    fully connected layer that constricts the data into 10 outputs worked best. This achieved an accuracy 
+    of 99.1% when run with a learning rate of 0.001 and all other parameters default.
