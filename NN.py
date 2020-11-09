@@ -1,8 +1,6 @@
-#! /usr/bin/env python3
-
 """
 @authors: Brian Hutchinson (Brian.Hutchinson@wwu.edu)
-          Michael Albert (albertm4@wwu.edu)
+          Michael Albert (albertmichael746@gmail.com)
           Archan Rupela (rupelaa@wwu.edu)
 
 A simple example of building a convolutional neural network using
@@ -104,7 +102,7 @@ class OurConvNeuralNet(torch.nn.Module):
         for name, param in self.named_parameters():
             print(name,param.data.shape)
 
-    def forward(self, x, f1):
+    def forward(self, x, f1="relu"):
         """
         In the forward function we accept a Tensor of input data and we must
         return a Tensor of output data. We can use Modules defined in the
@@ -206,6 +204,18 @@ def train(model,train_loader,dev_loader,args):
                 dev_acc = dev_acc/devN
                 print("%03d.%04d: dev %.3f" % (epoch,update,dev_acc))
 
+def load(name):
+    # load trained model
+    model = OurConvNeuralNet(10)
+    model.load_state_dict(torch.load(name))
+    model.eval()
+    return model
+
+def predict(model, array):
+    output = model(array)
+    prediction = int(torch.max(output.data, 1)[1].numpy())
+    print(prediction)
+
 def main(argv):
     # determine device to use
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -223,7 +233,7 @@ def main(argv):
     model = OurConvNeuralNet(args.C) # new CNN
     model = model.to(device)
     train(model,train_loader,dev_loader,args)
-    torch.save(model, "model.pt")
+    torch.save(model.state_dict(), "model.pt")
 
 if __name__ == "__main__":
     main(sys.argv)
